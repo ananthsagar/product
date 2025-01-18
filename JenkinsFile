@@ -1,0 +1,24 @@
+pipeline{
+  agent any
+    stages{
+        stage('Clone Repository'){
+             steps{
+          git branch:'main' url : 'https://github.com/ananthsagar/product.git'
+          }
+       }
+     stage('Compile'){
+      steps{
+         bat 'javac src\\com\\wipro\\util\\Product.java'
+}
+}
+   stage('Run'){
+     steps{
+   script{
+   def num1=input message: 'Enter the first number:',parameters:[string(name:'NUM1')]
+   def num2=input message: 'Enter the first number:',parameters:[string(name:'NUM2')]
+   bat "java -cp src com.wipro.util.Product ${num1}${num2}"
+}
+}
+}
+}
+}
